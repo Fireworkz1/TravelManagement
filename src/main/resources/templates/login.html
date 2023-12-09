@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- 添加自定义样式 -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* 垂直排列子元素 */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* 设置表单宽度 */
+            display: flex;
+            flex-direction: column; /* 垂直排列子元素 */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 48%; /* 设置按钮宽度 */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button, input {
+            transition: background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+<!-- 显示标题 -->
+<h1 th:text="${message}"></h1>
+
+<!-- 显示错误消息 -->
+<h1 th:if="${error}" th:text="${error}" style="color: red;"></h1>
+<!-- 登录表单 -->
+<form id="loginForm" th:action="@{/user/login}" method="post">
+    <!-- 第一个文本框，显示账号 -->
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" th:placeholder="${usernamePlaceholder}" required>
+    <br>
+
+    <!-- 第二个文本框，显示密码 -->
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" th:placeholder="${passwordPlaceholder}" required>
+    <br>
+
+    <!-- 登录按钮 -->
+    <div class="button-container">
+        <!-- 登录按钮 -->
+        <button type="submit">登录</button>
+
+        <!-- 注册按钮 -->
+        <button type="button" onclick="register()">注册</button>
+    </div>
+</form>
+
+
+
+<script>
+    // 注册按钮点击事件
+    function register() {
+        // 设置一个隐藏字段用于标识是登录还是注册
+        var registerInput = document.createElement("input");
+        registerInput.setAttribute("type", "hidden");
+        registerInput.setAttribute("name", "action");
+        registerInput.setAttribute("value", "register");
+
+        // 将隐藏字段添加到表单中
+        var loginForm = document.getElementById("loginForm");
+        loginForm.appendChild(registerInput);
+
+        // 提交表单
+        loginForm.submit();
+    }
+</script>
+
+
+</body>
+</html>
+
+

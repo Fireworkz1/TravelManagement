@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/reserve.css">
+    <title>Reserve</title>
+</head>
+<body>
+<h1 th:text="'您已预约的 ' + ${type} + ' 如下'"></h1>
+<!-- 数据容器 -->
+<table id="dataTable" class="custom-table">
+    <!-- 表头 -->
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${self_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${self_info}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <div th:if="${type eq 'flight'}">
+            <td th:text="${item.flightNum}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numSeats}"></td>
+            <td th:text="${item.numAvail}"></td>
+            <td th:text="${item.fromCity}"></td>
+            <td th:text="${item.arivCity}"></td>
+        </div>
+        <div th:if="${type eq 'bus'}">
+            <td th:text="${item.location}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numBus}"></td>
+            <td th:text="${item.numAvail}"></td>
+
+        </div>
+        <div th:if="${type eq 'hotel'}">
+            <td th:text="${item.location}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numRoom}"></td>
+            <td th:text="${item.numAvail}"></td>
+
+        </div>
+    </tr>
+    </tbody>
+</table>
+<h1 th:text="'您仍可预约的 ' + ${type} + ' 如下，请在文本框内输入编号/地址预约'"></h1>
+<form id="resvForm" th:action="@{/user/reserve}" method="post">
+    <label for="resvid"></label>
+    <input type="text" id="resvid" name="resvid" th:placeholder="${resvPlaceholder}" required>
+    <input type="hidden" name="type" th:value="${type}">
+    <div class="button-container">
+
+        <button type="submit">预定</button>
+
+    </div>
+</form>
+<table id="dataTable" class="custom-table">
+    <!-- 表头 -->
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${self_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${other_info}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <div th:if="${type eq 'flight'}">
+            <td th:text="${item.flightNum}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numSeats}"></td>
+            <td th:text="${item.numAvail}"></td>
+            <td th:text="${item.fromCity}"></td>
+            <td th:text="${item.arivCity}"></td>
+            </div>
+        <div th:if="${type eq 'bus'}">
+            <td th:text="${item.location}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numBus}"></td>
+            <td th:text="${item.numAvail}"></td>
+
+        </div>
+        <div th:if="${type eq 'hotel'}">
+            <td th:text="${item.location}"></td>
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.numRooms}"></td>
+            <td th:text="${item.numAvail}"></td>
+
+        </div>
+
+
+    </tr>
+    </tbody>
+</table>
+<!-- 侧边进度条 -->
+<!--<input type="range" id="progress" min="0" max="100" value="0" step="1" />-->
+
+<!-- JavaScript 脚本 -->
+<!--<script src="/reserve.js"></script>-->
+<script>
+    document.getElementById('resvForm').addEventListener('submit', function(event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+
+        var resvidValue = document.getElementById('resvid').value.toString();
+
+
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse([[${other_info_json}]]);
+        var type = [[${type}]];
+        if(type==="flight"){
+            var isValueInList = List.some(function(item) {
+                return item.flightNum === resvidValue;
+            });
+        }else{
+            var isValueInList = List.some(function(item) {
+                return item.location === resvidValue;
+            });
+        }
+        /* 检查输入的值是否在 列表中的某个 Flight 的 Flightname 属性中 */
+
+
+
+        if (isValueInList) {
+            this.submit();
+        } else {
+            alert('输入的值不在列表中，请重新输入！');
+        }
+    });
+</script>
+
+</body>
+</html>

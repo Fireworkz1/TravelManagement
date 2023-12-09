@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+
+<!-- 显示用户信息 -->
+<h1 th:text="${user_info}"></h1>
+
+<!-- 显示用户旅行路线 -->
+<p th:text="${user_route}"></p>
+
+<!-- 使用Thymeleaf添加四个按钮 -->
+<form method="get" action="/user/reserve">
+    <input type="hidden" name="type" value="flight">
+    <button type="submit">选择飞机</button>
+</form>
+
+<form method="get" action="/user/reserve">
+    <input type="hidden" name="type" value="bus">
+    <button type="submit">选择公交</button>
+</form>
+
+<form method="get" action="/user/reserve">
+    <input type="hidden" name="type" value="hotel">
+    <button type="submit">选择酒店</button>
+</form>
+
+<form method="get" action="/user/delete">
+    <input type="hidden" name="page" value="del">
+    <button type="submit">调整预定</button>
+</form>
+
+</body>
+</html>
