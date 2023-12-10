@@ -22,8 +22,7 @@
         <input type="text" id="price" name="price" required>
         <label for="numRooms">房间数：</label>
         <input type="text" id="numRooms" name="numRooms" required>
-        <label for="time">住宿时间：</label>
-        <input type="datetime-local" id="time" name="time" required>
+
 
         <div class="button-container">
             <button type="submit">添加该酒店</button>
@@ -60,9 +59,7 @@
         <td th:text="${item.price}"></td>
         <td th:text="${item.numRooms}"></td>
         <td th:text="${item.numAvail}"></td>
-        <td>
-            <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
-        </td>
+
 
     </tr>
     </tbody>

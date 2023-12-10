@@ -1,10 +1,9 @@
 package com.example.dbexperiment.Mapper;
 
 import com.example.dbexperiment.Entity.Customer;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface CustomerMapper {
@@ -15,5 +14,14 @@ public interface CustomerMapper {
     Customer select(@Param("custName") String custName,@Param("custPassword") String custPassword);
     @Select("select * from customers where custName=#{custName}")
     Customer selectId(String custName);
+
+    @Select("select * from customers")
+    List<Customer> selectAll();
+
+    @Delete("delete from customers where custName=#{custName}")
+    void delUser(String custName);
+
+    @Update("update customers set custPassword='123456' where custName=#{custName}")
+    void changePswd(String custName);
 
 }

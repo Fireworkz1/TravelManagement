@@ -26,7 +26,7 @@ public class RootController {
     @GetMapping("")
     public String hello(Model model) {
         // 向模板传递数据
-        model.addAttribute("message", "管理员，您好!欢迎登陆系统");
+        model.addAttribute("message", "管理员，您好!欢迎登录系统");
 
         // 指定使用的模板文件（templates/root.html）
         return "root";
@@ -65,7 +65,6 @@ public class RootController {
         self_label.add("价格");
         self_label.add("房间数");
         self_label.add("剩余房间数");
-        self_label.add("日期");
         model.addAttribute("self_label",self_label);
         model.addAttribute("hotels_list",hotelList);
         model.addAttribute("hotels_list_json", new ObjectMapper().writeValueAsString(hotelList));
@@ -109,5 +108,25 @@ public class RootController {
     public String getResv(Model model){
 
         return null;
+    }
+    @GetMapping("/customer")
+    public String getCustomer(Model model) throws JsonProcessingException {
+        List<String> self_label=new ArrayList<>();
+        self_label.add("用户名");
+        self_label.add("密码");
+        model.addAttribute("self_label",self_label);
+        model.addAttribute("user_list",rootService.selectAllUser());
+        model.addAttribute("user_list_json", new ObjectMapper().writeValueAsString(rootService.selectAllUser()));
+        return "roothtml/customer";
+    }
+    @PostMapping("/customer/del")
+    public String delCustomer(Model model, @RequestParam String name,@RequestParam(required = false, defaultValue = "") String action){
+        if ("default".equals(action)) {
+            rootService.defaultPswd(name);
+        }
+        else {
+            rootService.delUser(name);
+        };
+        return "redirect:/root/customer";
     }
 }

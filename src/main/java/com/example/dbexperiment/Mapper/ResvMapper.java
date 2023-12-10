@@ -18,6 +18,8 @@ public interface ResvMapper {
     Reservation selectDetail(String custName,String resvKey);
     @Delete("delete from reservations where resvId=#{resvId} ")
     void delete(Integer resvId);
+    @Delete("delete from reservations where custName=#{custName} ")
+    void deleteByUser(String custName);
     @Insert("insert into reservations(custName,resvType,resvKey,resvTime) values(#{custName},#{resvType},#{resvKey},#{resvTime})")
     void insert(String custName, Integer resvType, String resvKey, Date resvTime);
     @Insert("insert into reservations(custName,resvType,resvKey,resvTime,objTime) values(#{custName},#{resvType},#{resvKey},#{resvTime},#{objTime})")

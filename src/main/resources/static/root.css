@@ -51,7 +51,9 @@
     align-items: center;
      /* 设置按钮宽度 */
 }
-
+.button-container button:first-child {
+    margin-right: 20px;  /* 右外边距为 20px */
+}
 .button-container button:hover {
     background-color: #0056b3;
 }
@@ -106,4 +108,10 @@
 }
 .normal-button button:hover {
     background-color: #0056b3;
+}
+.input-field {
+    width: 200px; /* 设置输入框宽度为 300 像素，你可以根据需要调整宽度 */
+}
+#username {
+    width: 200px; /* 设置输入框宽度为 300 像素，你可以根据需要调整宽度 */
 }

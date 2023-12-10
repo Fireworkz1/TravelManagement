@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer</title>
+    <link rel="stylesheet" href="/root.css">
+</head>
+<body>
+<h1>以下为所有用户信息</h1>
+<form  id="return" th:action="@{/root}" method="get">
+    <div class="normal-button">
+        <button type="submit">返回</button>
+    </div>
+</form>
+<div class="formContainer">
+    <form class="formComponent" id="delUser" th:action="@{/root/customer/del}" method="post">
+        <label for="delUser">删除用户信息</label>
+
+        <label for="username">用户名：</label>
+        <input class="input-field" type="text" id="username" name="name" required>
+
+        <div class="button-container">
+            <button type="submit">删除该用户</button>
+            <button type="button" onclick="pswd()">重置密码</button>
+        </div>
+    </form>
+</div>
+
+<table id="dataTable" class="custom-table">
+    <!-- 表头 -->
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${self_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${user_list}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <td th:text="${item.custName}"></td>
+        <td th:text="'********'"></td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div id="user_json" th:attr="user_json=${user_list_json}"></div>
+
+<script>
+    document.getElementById('delUser').addEventListener('submit', function (event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+
+        var delidValue = document.getElementById('username').value.toString();
+        var a = document.getElementById('user_json')
+        var json = a.getAttribute('user_json')
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(json);
+        console.log(List)
+
+        var isValueInList = List.some(function (item) {
+            return item.custName === delidValue
+        });
+
+        if (isValueInList) {
+            alert('删除成功！');
+            this.submit();
+        } else {
+            alert('该用户不存在，请重新输入！');
+        }
+    });
+</script>
+<script>
+    // 注册按钮点击事件
+    function pswd() {
+        // 设置一个隐藏字段用于标识是登录还是注册
+        var delidValue = document.getElementById('username').value.toString();
+        var a = document.getElementById('user_json')
+        var json = a.getAttribute('user_json')
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(json);
+        console.log(List)
+        console.log(delidValue)
+        var isValueInList = List.some(function (item) {
+            return item.custName === delidValue
+        });
+
+        if (isValueInList) {
+            var registerInput = document.createElement("input");
+            registerInput.setAttribute("type", "hidden");
+            registerInput.setAttribute("name", "action");
+            registerInput.setAttribute("value", "default");
+
+            // 将隐藏字段添加到表单中
+            var pswd = document.getElementById("delUser");
+            pswd.appendChild(registerInput);
+
+            // 提交表单
+            pswd.submit();
+            alert('修改默认密码为123456');
+            this.submit();
+        } else {
+            alert('该用户不存在，请重新输入！');
+        }
+
+
+    }
+</script>
+</body>
+</html>
