@@ -48,7 +48,7 @@
         <div th:if="${type eq 'hotel'}">
             <td th:text="${item.location}"></td>
             <td th:text="${item.price}"></td>
-            <td th:text="${item.numRoom}"></td>
+            <td th:text="${item.numRooms}"></td>
             <td th:text="${item.numAvail}"></td>
             <td>
                 <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
@@ -59,14 +59,12 @@
     </tbody>
 </table>
 <h1 th:text="'您仍可预约的 ' + ${type} + ' 如下，请在文本框内输入编号/地址预约'"></h1>
-<form id="resvForm" th:action="@{/user/reserve}" method="post">
-    <label for="resvid"></label>
+<form class="formComponent" id="resvForm" th:action="@{/user/reserve}" method="post">
+    <label for="resvid">请输入编号/名字</label>
     <input type="text" id="resvid" name="resvid" th:placeholder="${resvPlaceholder}" required>
     <input type="hidden" name="type" th:attr="value=${type}">
     <div class="button-container">
-
         <button type="submit">预定</button>
-
     </div>
 </form>
 <table id="dataTable" class="custom-table">

@@ -4,6 +4,7 @@ import com.example.dbexperiment.Config.UserContext;
 import com.example.dbexperiment.Entity.Bus;
 import com.example.dbexperiment.Entity.Flight;
 import com.example.dbexperiment.Entity.Hotel;
+import com.example.dbexperiment.Entity.Route;
 import com.example.dbexperiment.Service.UserService;
 import com.example.dbexperiment.util.Enum.SvcTypeEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -86,7 +87,11 @@ public class UserController {
         model.addAttribute("route_label", route_label);
         return "userdashboard";
     }
-
+    @PostMapping("/dashboard")
+    public String logOut(Model model){
+        UserContext.getInstance().setUsername(null);
+        return "index";
+    }
     @GetMapping("/reserve")
     public String getReserve(@RequestParam String type,Model model) throws JsonProcessingException {
         List<?> self_info = null; // 使用通配符 (?) 表示不确定的类型
@@ -158,6 +163,35 @@ public class UserController {
         return "redirect:/user/dashboard";
     }
 
+    @GetMapping("/delete")
+    public String getDelete(@RequestParam String page,Model model) throws JsonProcessingException {
+        String user=UserContext.getInstance().getUsername();
+        String user_info="以下是您预约的行程,请在输入框内选择你想删除的预约";
+        List<String> route_label=new ArrayList<>();
+        route_label.add("编号/名字");
+        route_label.add("种类");
+        route_label.add("时间");
+        Route route=userService.travelRoute(user);
+        model.addAttribute("user_info", user_info);//title
+        model.addAttribute("tuple_route", route.getResvTupleList());//用户当前全部预定信息
+        model.addAttribute("user_route","您当前的预约如下");//用户当前旅行路线
+        model.addAttribute("route_label", route_label);
+        model.addAttribute("route_info_json", new ObjectMapper().writeValueAsString(route.getResvTupleList()));
+        return "delreserve";
+    }
+    @PostMapping("/delete")
+    public String postDelete(@RequestParam String delid,@RequestParam String deltype,Model model) {
+        String user=UserContext.getInstance().getUsername();
+//        if(deltype.equals("flight"))
+//            userService.cancelFlight(delid,UserContext.getInstance().getUsername());
+//        else if (deltype.equals("hotel"))
+//            userService.cancelHotel(delid,UserContext.getInstance().getUsername());
+//        else if (deltype.equals("bus"))
+//            userService.cancelBus(delid,UserContext.getInstance().getUsername());
+
+        userService.cancel(delid,user);
+        return "redirect:/user/dashboard";
+    }
 }
 
 

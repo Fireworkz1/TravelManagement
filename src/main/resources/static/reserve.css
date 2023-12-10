@@ -3,11 +3,65 @@
 /* 样式示例，根据实际需求进行调整 */
 /* styles.css */
 
+
+
+
+.formComponent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px; /* 设置表单宽度 */
+    display: flex;
+    flex-direction: column; /* 垂直排列子元素 */
+}
+
+.formComponent label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.formComponent input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.button-container button {
+    background-color: #335693;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-items: center;
+    width: 48%; /* 设置按钮宽度 */
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container button, .button-container input {
+    transition: background-color 0.3s ease;
+}
 /* 表格样式 */
 #dataTable {
     width: 100%;
     border-collapse: collapse; /* 去除表格边框之间的间隙 */
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 /* 表头样式 */
@@ -34,3 +88,8 @@
 #dataTable tbody tr:hover {
     background-color: #f5f5f5;
 }
+
+
+
+
+

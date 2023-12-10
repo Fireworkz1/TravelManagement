@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/reserve.css">
+    <link rel="stylesheet" href="/button.css">
     <title>Dashboard</title>
 </head>
 <body>
@@ -11,6 +12,7 @@
 <h1 th:text="${user_info}"></h1>
 <!-- 显示用户旅行路线 -->
 <p th:text="${user_route}"></p>
+<p th:text="您当前的预约如下"></p>
 <table id="dataTable" class="custom-table">
     <thead>
     <tr>
@@ -55,6 +57,9 @@
     <input type="hidden" name="page" value="del">
     <button type="submit">调整预定</button>
 </form>
-
+<form method="post" action="/user/dashboard">
+    <input type="hidden" name="page" value="del">
+    <button type="submit">退出登录</button>
+</form>
 </body>
 </html>

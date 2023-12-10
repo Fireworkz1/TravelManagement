@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService {
     public List<ResvTuple> routeInfo(String username, Route route) {
         List<ResvTuple> resvTupleList = new ArrayList<>();
 
-        System.out.println(route);
+
         for(Flight flight :route.getFlightList()){
             ResvTuple tuple=new ResvTuple();
             tuple.setName(flight.getFlightNum());

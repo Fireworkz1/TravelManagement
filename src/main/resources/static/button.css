@@ -1,0 +1,28 @@
+/* 设置按钮的基本样式 */
+button {
+    background-color: #335693;
+    color: #fff;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    margin_top: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px; /* 控制按钮之间的右边距 */
+    justify-content: center;
+}
+
+/* 设置按钮在悬停时的样式 */
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 设置所有form元素（即按钮所在的form）的样式 */
+form {
+    display: inline-block; /* 让form元素在一行内显示 */
+}
+
+/* 设置form元素中的按钮之间的左边距 */
+form + form {
+    margin-left: 10px;
+}

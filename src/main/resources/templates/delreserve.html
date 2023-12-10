@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/reserve.css">
+    <title>Delreserve</title>
+</head>
+<body>
+<!-- 显示用户信息 -->
+<h1 th:text="${user_info}"></h1>
+<!-- 显示用户旅行路线 -->
+<p th:text="${user_route}"></p>
+<table id="dataTable" class="custom-table">
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${route_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${tuple_route}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <td th:text="${item.name}"></td>
+
+        <td th:text="${item.type}"></td>
+        <td th:text="${item.dateString}"></td>
+    </tr>
+    <div id="route_json" th:attr="route_json=${route_info_json}"></div>
+    </tbody>
+</table>
+<form class="formComponent"  id="delForm" th:action="@{/user/delete}" method="post">
+    <label for="delid">请输入编号/名字:</label>
+    <input type="text" id="delid" name="delid" th:placeholder="${delidPlaceholder}" required>
+
+    <label for="deltype">请输入种类:</label>
+    <input type="text" id="deltype" name="deltype" th:placeholder="${deltypePlaceholder}" required>
+    <br>
+    <div class="button-container">
+        <button type="submit">取消该预约</button>
+    </div>
+</form>
+
+<script>
+    document.getElementById('delForm').addEventListener('submit', function(event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+
+        var delidValue = document.getElementById('delid').value.toString();
+        var deltypeValue = document.getElementById('deltype').value.toString();
+        var a=document.getElementById('route_json')
+        var other=a.getAttribute('route_json')
+        console.log(other)
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(other);
+        console.log(List)
+
+        var isValueInList = List.some(function(item) {
+            return item.name === delidValue&&item.type===deltypeValue;
+            });
+
+
+        if (isValueInList) {
+            alert('删除成功！');
+            this.submit();
+        } else {
+            alert('输入的值不在可选列表中，请重新输入！');
+        }
+    });
+</script>
+</body>
+</html>
