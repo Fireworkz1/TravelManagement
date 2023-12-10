@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/button.css">
     <title>Hello Thymeleaf</title>
 </head>
 <body>
 <h1 th:text="${message}"></h1>
+<form method="get" action="/root/flight">
+    <input type="hidden" name="type" value="flight">
+    <button type="submit">操作航班数据库</button>
+</form>
+
+<form method="get" action="/root/bus">
+    <input type="hidden" name="type" value="bus">
+    <button type="submit">操作公交数据库</button>
+</form>
+
+<form method="get" action="/root/hotel">
+    <input type="hidden" name="type" value="hotel">
+    <button type="submit">操作酒店数据库</button>
+</form>
+
+<form method="get" action="/root/reservation">
+    <input type="hidden" name="page" value="del">
+    <button type="submit">操作顾客订单数据</button>
+</form>
+<form method="post" action="/user/dashboard">
+    <input type="hidden" name="page" value="del">
+    <button type="submit">退出登录</button>
+</form>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.example.dbexperiment.Entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -10,6 +11,6 @@ public class Hotel {
     private Integer price;
     private Integer numRooms;
     private Integer numAvail;
-    private Date time;
+
 
 }

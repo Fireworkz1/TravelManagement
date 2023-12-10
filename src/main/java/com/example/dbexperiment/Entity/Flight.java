@@ -1,6 +1,7 @@
 package com.example.dbexperiment.Entity;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class Flight {
     private Integer numAvail;
     private String  fromCity;
     private String  arivCity;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date time;
 
 }

@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface HotelMapper {
-    @Insert("insert into hotels(location,price,numRooms,numAvail,time)values(#{location},#{price},#{numRooms},#{numAvail},#{time})")
-    void add(String location, Integer price, Integer numRooms, Integer numAvail, Date time);
+    @Insert("insert into hotels(location,price,numRooms,numAvail)values(#{location},#{price},#{numRooms},#{numAvail})")
+    void add(String location, Integer price, Integer numRooms, Integer numAvail);
 
     @Delete("delete from hotels where location=#{location}")
     void delete(String location);

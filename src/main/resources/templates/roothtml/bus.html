@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus</title>
+    <link rel="stylesheet" href="/root.css">
+</head>
+<body>
+<h1>修改公交数据库 以下为公交现有数据</h1>
+<form  id="return" th:action="@{/root}" method="get">
+    <div class="normal-button">
+        <button type="submit">返回</button>
+    </div>
+</form>
+<div class="formContainer">
+    <form class="formComponent" id="addBus" th:action="@{/root/bus/add}" method="post">
+        <label for="addBus">添加公交信息</label>
+
+        <label for="location">公交地点：</label>
+        <input type="text" id="location" name="location" required>
+        <label for="price">公交价格：</label>
+        <input type="text" id="price" name="price" required>
+        <label for="numBus">座位数：</label>
+        <input type="text" id="numBus" name="numBus" required>
+        <label for="time">发车时间：</label>
+        <input type="datetime-local" id="time" name="time" required>
+
+        <div class="button-container">
+            <button type="submit">添加该公交</button>
+        </div>
+    </form>
+
+    <form class="formComponent" id="delBus" th:action="@{/root/bus/del}" method="post">
+        <label for="delBus">删除公交信息</label>
+
+        <label for="location1">公交地点：</label>
+        <input type="text" id="location1" name="name" required>
+
+        <div class="button-container">
+            <button type="submit">删除该公交</button>
+        </div>
+    </form>
+</div>
+
+<table id="dataTable" class="custom-table">
+    <!-- 表头 -->
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${self_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${buses_list}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <td th:text="${item.location}"></td>
+        <td th:text="${item.price}"></td>
+        <td th:text="${item.numBus}"></td>
+        <td th:text="${item.numAvail}"></td>
+        <td>
+            <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+<div id="buses_json" th:attr="buses_json=${buses_list_json}"></div>
+<script>
+    document.getElementById('addBus').addEventListener('submit', function (event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+        var addidValue = document.getElementById('location').value.toString();
+        var a = document.getElementById('buses_json')
+        var json = a.getAttribute('buses_json')
+        /* 将后端的 Bus 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(json);
+
+        var isValueInList = List.some(function (item) {
+            return item.location === addidValue
+        });
+
+        if (isValueInList) {
+            alert('添加失败，重复！');
+
+        } else {
+            alert('添加成功！');
+            this.submit();
+        }
+    });
+</script>
+
+<script>
+    document.getElementById('delBus').addEventListener('submit', function (event) {
+        // 阻止表单的默认提交行为
+        event.preventDefault();
+
+        var delidValue = document.getElementById('location1').value.toString();
+        var a = document.getElementById('buses_json')
+        var json = a.getAttribute('buses_json')
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(json);
+
+
+        var isValueInList = List.some(function (item) {
+            return item.location === delidValue
+        });
+
+        if (isValueInList) {
+            alert('删除成功！');
+            this.submit();
+        } else {
+            alert('输入的值不在可选列表中，请重新输入！');
+        }
+    });
+</script>
+</body>
+</html>

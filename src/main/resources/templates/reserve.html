@@ -51,7 +51,7 @@
             <td th:text="${item.numRooms}"></td>
             <td th:text="${item.numAvail}"></td>
             <td>
-                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+
             </td>
 
         </div>
@@ -62,6 +62,8 @@
 <form class="formComponent" id="resvForm" th:action="@{/user/reserve}" method="post">
     <label for="resvid">请输入编号/名字</label>
     <input type="text" id="resvid" name="resvid" th:placeholder="${resvPlaceholder}" required>
+    <label for="hotelTime">预订酒店时填写时间（其他不填）</label>
+    <input type="datetime-local" id="hotelTime" name="objTime" th:placeholder="${hotelTimePlaceholder}" required>
     <input type="hidden" name="type" th:attr="value=${type}">
     <div class="button-container">
         <button type="submit">预定</button>
@@ -107,9 +109,7 @@
             <td th:text="${item.price}"></td>
             <td th:text="${item.numRooms}"></td>
             <td th:text="${item.numAvail}"></td>
-            <td>
-                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
-            </td>
+
 
         </div>
         <div id="other_json" th:attr="other_json=${other_info_json}"></div>
@@ -138,6 +138,10 @@
         if(type==="flight"){
             var isValueInList = List.some(function(item) {
                 return item.flightNum === resvidValue;
+            });
+        }else if (type==="bus"){
+            var isValueInList = List.some(function(item) {
+                return item.location === resvidValue;
             });
         }else{
             var isValueInList = List.some(function(item) {

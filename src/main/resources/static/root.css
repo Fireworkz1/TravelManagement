@@ -1,0 +1,109 @@
+.formContainer {
+    display: flex;
+    /*justify-content: space-between;*/
+    gap: 10px; /* 设置间隔为100px */
+    flex-direction: column;
+}
+.formComponent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* 设置表单宽度 */
+    display: flex;
+    justify-content: space-between;
+    gap: 10px; /* 设置间隔为100px */
+    flex-wrap: wrap;
+    flex-direction: row; /* 水平排列子元素 */
+}
+
+.formComponent label {
+    display: block;
+    /*margin-bottom: 8px;*/
+    align-items: center;
+    font-weight: bold;
+}
+
+.formComponent input {
+    width: 7%;
+    padding: 10px;
+    /*align-items: center;*/
+    /*margin-bottom: 10px;*/
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.button-container button {
+    background-color: #335693;
+    color: #fff;
+    padding: 10px 80px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-items: center;
+     /* 设置按钮宽度 */
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container button, .button-container input {
+    transition: background-color 0.3s ease;
+}
+/* 表格样式 */
+#dataTable {
+    width: 100%;
+    border-collapse: collapse; /* 去除表格边框之间的间隙 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 表头样式 */
+#dataTable th {
+    background-color: #f2f2f2;
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 数据行样式 */
+#dataTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* 奇偶行背景色交替 */
+#dataTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 悬停时改变行背景色 */
+#dataTable tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.normal-button button {
+    background-color: #335693;
+    color: #fff;
+    padding: 10px 60px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-items: center;
+    margin-bottom: 10px;
+    /* 设置按钮宽度 */
+}
+.normal-button button:hover {
+    background-color: #0056b3;
+}

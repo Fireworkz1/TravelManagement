@@ -46,11 +46,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean chooseHotel(String target, String username, Date time) {
+    public boolean chooseHotel(String target, String username, Date time, Date objTime) {
         Hotel h = hotelMapper.selectById(target);
         if ((h != null) && (h.getNumAvail() != 0)) {
             flightMapper.updateChoose(h.getLocation());
-            resvMapper.insert(username, SvcTypeEnum.hotel.getCode(), h.getLocation(),time);
+            resvMapper.insertHotel(username, SvcTypeEnum.hotel.getCode(), h.getLocation(),time,objTime);
             return true;
         } else return false;
     }
@@ -229,7 +229,14 @@ public class UserServiceImpl implements UserService {
             ResvTuple tuple=new ResvTuple();
             tuple.setName(hotel.getLocation());
             tuple.setType("酒店");
-            tuple.setDate(hotel.getTime());
+
+            List<Reservation> reservationList= resvMapper.selectByCustomer(username);
+            for(Reservation reservation : reservationList)
+                if(Objects.equals(reservation.getResvKey(), hotel.getLocation())){
+                    tuple.setDate(reservation.getObjTime());
+                    break;
+                }
+
             resvTupleList.add(tuple);
 
         }

@@ -9,6 +9,7 @@ import com.example.dbexperiment.Service.UserService;
 import com.example.dbexperiment.util.Enum.SvcTypeEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -121,13 +122,14 @@ public class UserController {
             self_label.add("日期");
         } else if (type.equals("hotel")) {
             self_info=userService.travelRoute(user).getHotelList();
+            System.out.println(self_info);
             all_info=userService.searchHotel();
             page_info+="酒店";
             self_label.add("地点");
             self_label.add("价格");
             self_label.add("房间数");
             self_label.add("剩余房间数");
-            self_label.add("日期");
+
         }else{
             System.out.println("fail");}
 
@@ -151,12 +153,12 @@ public class UserController {
         return "reserve";
     }
     @PostMapping("/reserve")
-    public String postReserve(@RequestParam String resvid,@RequestParam String type){
+    public String postReserve(@RequestParam String resvid,@RequestParam String type,@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") Date objTime){
         SvcTypeEnum svcType = SvcTypeEnum.valueOf(type);
         if(type.equals("flight"))
             userService.chooseFlight(resvid,UserContext.getInstance().getUsername(), new Date());
         else if (type.equals("hotel"))
-            userService.chooseHotel(resvid,UserContext.getInstance().getUsername(), new Date());
+            userService.chooseHotel(resvid,UserContext.getInstance().getUsername(), new Date(),objTime);
         else if (type.equals("bus"))
             userService.chooseBus(resvid,UserContext.getInstance().getUsername(), new Date());
 

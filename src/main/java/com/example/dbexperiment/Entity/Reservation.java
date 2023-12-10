@@ -10,6 +10,6 @@ public class Reservation {
     private Integer resvType;
     private String resvKey;//预定标识号；宾馆，公交车和飞机的名字id
     private Integer resvId;
-    private Date resvTime;
-    private Date objTime;
+    private Date resvTime;//预约时间
+    private Date objTime;//目标时间
 }

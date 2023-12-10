@@ -8,8 +8,10 @@ import java.util.List;
 public interface UserService {
         boolean createUser(String username,String password);
         boolean chooseFlight(String target,String username, Date time);
-        boolean chooseHotel(String target,String username, Date time);
-        boolean chooseBus(String target,String username, Date time);
+
+        boolean chooseHotel(String target, String username, Date time, Date objTime);
+
+        boolean chooseBus(String target, String username, Date time);
         boolean cancelFlight(String target,String username);
         boolean cancelHotel(String target,String username);
         boolean cancelBus(String target,String username);

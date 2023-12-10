@@ -31,7 +31,7 @@
     <div id="route_json" th:attr="route_json=${route_info_json}"></div>
     </tbody>
 </table>
-<form class="formComponent"  id="delForm" th:action="@{/user/delete}" method="post">
+<form class="formComponent" id="delForm" th:action="@{/user/delete}" method="post">
     <label for="delid">请输入编号/名字:</label>
     <input type="text" id="delid" name="delid" th:placeholder="${delidPlaceholder}" required>
 
@@ -58,7 +58,7 @@
         console.log(List)
 
         var isValueInList = List.some(function(item) {
-            return item.name === delidValue&&item.type===deltypeValue;
+            return item.name === delidValue && item.type===deltypeValue;
             });
 
 

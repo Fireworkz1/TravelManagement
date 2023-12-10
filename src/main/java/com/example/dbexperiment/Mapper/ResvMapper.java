@@ -20,5 +20,6 @@ public interface ResvMapper {
     void delete(Integer resvId);
     @Insert("insert into reservations(custName,resvType,resvKey,resvTime) values(#{custName},#{resvType},#{resvKey},#{resvTime})")
     void insert(String custName, Integer resvType, String resvKey, Date resvTime);
-
+    @Insert("insert into reservations(custName,resvType,resvKey,resvTime,objTime) values(#{custName},#{resvType},#{resvKey},#{resvTime},#{objTime})")
+    void insertHotel(String custName, Integer resvType, String resvKey, Date resvTime,Date objTime);
 }
