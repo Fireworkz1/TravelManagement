@@ -1,9 +1,6 @@
 package com.example.dbexperiment.Service;
 
-import com.example.dbexperiment.Entity.Bus;
-import com.example.dbexperiment.Entity.Flight;
-import com.example.dbexperiment.Entity.Hotel;
-import com.example.dbexperiment.Entity.Route;
+import com.example.dbexperiment.Entity.*;
 
 import java.util.Date;
 import java.util.List;
@@ -17,11 +14,15 @@ public interface UserService {
         boolean cancelHotel(String target,String username);
         boolean cancelBus(String target,String username);
         boolean cancel(String target,String username);
-        boolean addUser(String name,String pswd);
+
+
+
+        boolean addUser(String name, String pswd);
         boolean userLogin(String name,String pswd);
         List<Flight> searchFlight();
         List<Hotel> searchHotel();
         List<Bus> searchBus();
 
         Route travelRoute(String username);
+        List<ResvTuple> routeInfo(String username,Route route);
 }

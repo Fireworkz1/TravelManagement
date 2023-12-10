@@ -10,4 +10,5 @@ public class Route {
     private List<Bus> busList;
     private List<Hotel> hotelList;
     private String route_str;
+    private List<ResvTuple> resvTupleList;
 }

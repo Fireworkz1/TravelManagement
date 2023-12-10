@@ -12,7 +12,7 @@ import java.util.List;
 @Mapper
 public interface ResvMapper {
 
-    @Select("select * from reservations where custName=#{custName} order by resvTime")
+    @Select("select * from reservations where custName=#{custName} order by objTime")
     List<Reservation> selectByCustomer(String custName);
     @Select("select * from reservations where custName=#{custName} and resvKey=#{resvKey}")
     Reservation selectDetail(String custName,String resvKey);

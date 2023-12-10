@@ -23,7 +23,7 @@ public class RootServiceImpl implements RootService {
 
     @Override
     public void addFlight(Flight flight) {
-        flightMapper.add(flight.getFlightNum(),flight.getPrice(),flight.getNumSeats(),flight.getNumAvail(), flight.getFromCity(), flight.getArivCity());
+        flightMapper.add(flight.getFlightNum(),flight.getPrice(),flight.getNumSeats(),flight.getNumAvail(), flight.getFromCity(), flight.getArivCity(),flight.getTime());
     }
 
     @Override

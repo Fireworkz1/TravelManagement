@@ -2,15 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/reserve.css">
     <title>Dashboard</title>
 </head>
 <body>
 
 <!-- 显示用户信息 -->
 <h1 th:text="${user_info}"></h1>
-
 <!-- 显示用户旅行路线 -->
 <p th:text="${user_route}"></p>
+<table id="dataTable" class="custom-table">
+    <thead>
+    <tr>
+        <!-- 使用 Thymeleaf 循环渲染表头 -->
+        <th th:each="label : ${route_label}" th:text="${label}"></th>
+    </tr>
+    </thead>
+    <!-- 数据行 -->
+    <tbody>
+    <!-- 使用 Thymeleaf 循环渲染数据 -->
+    <tr th:each="item : ${tuple_route}">
+        <!-- 使用 Thymeleaf 循环渲染数据属性 -->
+        <!-- 使用 Thymeleaf 获取 Flight 类的具体属性值 -->
+        <td th:text="${item.name}"></td>
+
+        <td th:text="${item.type}"></td>
+        <td th:text="${item.dateString}"></td>
+
+
+    </tr>
+    </tbody>
+</table>
+
 
 <!-- 使用Thymeleaf添加四个按钮 -->
 <form method="get" action="/user/reserve">

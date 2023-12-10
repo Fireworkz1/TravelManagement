@@ -31,12 +31,18 @@
             <td th:text="${item.numAvail}"></td>
             <td th:text="${item.fromCity}"></td>
             <td th:text="${item.arivCity}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
         </div>
         <div th:if="${type eq 'bus'}">
             <td th:text="${item.location}"></td>
             <td th:text="${item.price}"></td>
             <td th:text="${item.numBus}"></td>
             <td th:text="${item.numAvail}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
 
         </div>
         <div th:if="${type eq 'hotel'}">
@@ -44,6 +50,9 @@
             <td th:text="${item.price}"></td>
             <td th:text="${item.numRoom}"></td>
             <td th:text="${item.numAvail}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
 
         </div>
     </tr>
@@ -53,7 +62,7 @@
 <form id="resvForm" th:action="@{/user/reserve}" method="post">
     <label for="resvid"></label>
     <input type="text" id="resvid" name="resvid" th:placeholder="${resvPlaceholder}" required>
-    <input type="hidden" name="type" th:value="${type}">
+    <input type="hidden" name="type" th:attr="value=${type}">
     <div class="button-container">
 
         <button type="submit">预定</button>
@@ -81,12 +90,18 @@
             <td th:text="${item.numAvail}"></td>
             <td th:text="${item.fromCity}"></td>
             <td th:text="${item.arivCity}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
             </div>
         <div th:if="${type eq 'bus'}">
             <td th:text="${item.location}"></td>
             <td th:text="${item.price}"></td>
             <td th:text="${item.numBus}"></td>
             <td th:text="${item.numAvail}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
 
         </div>
         <div th:if="${type eq 'hotel'}">
@@ -94,9 +109,12 @@
             <td th:text="${item.price}"></td>
             <td th:text="${item.numRooms}"></td>
             <td th:text="${item.numAvail}"></td>
+            <td>
+                <span th:text="${#dates.format(item.time, 'MM月dd日HH点mm分')}"></span>
+            </td>
 
         </div>
-
+        <div id="other_json" th:attr="other_json=${other_info_json}"></div>
 
     </tr>
     </tbody>
@@ -112,11 +130,13 @@
         event.preventDefault();
 
         var resvidValue = document.getElementById('resvid').value.toString();
-
-
+        var a=document.getElementById('other_json')
+        var other=a.getAttribute('other_json')
+        console.log(other)
         /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
-        var List = JSON.parse([[${other_info_json}]]);
-        var type = [[${type}]];
+        var List = JSON.parse(other);
+        console.log(List)
+        var type = "[[${type}]]"
         if(type==="flight"){
             var isValueInList = List.some(function(item) {
                 return item.flightNum === resvidValue;
@@ -131,9 +151,10 @@
 
 
         if (isValueInList) {
+            alert('修改成功！');
             this.submit();
         } else {
-            alert('输入的值不在列表中，请重新输入！');
+            alert('输入的值不在可选列表中，请重新输入！');
         }
     });
 </script>

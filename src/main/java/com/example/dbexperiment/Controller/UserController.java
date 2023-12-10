@@ -5,6 +5,7 @@ import com.example.dbexperiment.Entity.Bus;
 import com.example.dbexperiment.Entity.Flight;
 import com.example.dbexperiment.Entity.Hotel;
 import com.example.dbexperiment.Service.UserService;
+import com.example.dbexperiment.util.Enum.SvcTypeEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -72,11 +75,15 @@ public class UserController {
     @GetMapping("/dashboard")
     public String getDashboard(Model model){
         String user=UserContext.getInstance().getUsername();
-        String user_info=user + ",欢迎您！";
+        String user_info=user + ",欢迎您！以下是您的行程";
+        List<String> route_label=new ArrayList<>();
+        route_label.add("编号/名字");
+        route_label.add("种类");
+        route_label.add("时间");
         model.addAttribute("user_info", user_info);//title
-        String route_str=userService.travelRoute(user).getRoute_str();
-        model.addAttribute("user_route", route_str);//用户当前旅行路线
-
+        model.addAttribute("tuple_route", userService.travelRoute(user).getResvTupleList());//用户当前全部预定信息
+        model.addAttribute("user_route", userService.travelRoute(user).getRoute_str());//用户当前旅行路线
+        model.addAttribute("route_label", route_label);
         return "userdashboard";
     }
 
@@ -97,6 +104,7 @@ public class UserController {
             self_label.add("剩余座位数");
             self_label.add("起飞城市");
             self_label.add("降落城市");
+            self_label.add("日期");
         } else if (type.equals("bus")) {
             self_info=userService.travelRoute(user).getBusList();
             all_info=userService.searchBus();
@@ -105,6 +113,7 @@ public class UserController {
             self_label.add("票价");
             self_label.add("座位数");
             self_label.add("剩余座位数");
+            self_label.add("日期");
         } else if (type.equals("hotel")) {
             self_info=userService.travelRoute(user).getHotelList();
             all_info=userService.searchHotel();
@@ -113,6 +122,7 @@ public class UserController {
             self_label.add("价格");
             self_label.add("房间数");
             self_label.add("剩余房间数");
+            self_label.add("日期");
         }else{
             System.out.println("fail");}
 
@@ -129,6 +139,7 @@ public class UserController {
         model.addAttribute("self_label",self_label);
         model.addAttribute("other_info",other_info);
         model.addAttribute("other_info_json", new ObjectMapper().writeValueAsString(other_info));
+
         // 假设 other_info 是一个 List<Bus> 对象
 
 
@@ -136,9 +147,15 @@ public class UserController {
     }
     @PostMapping("/reserve")
     public String postReserve(@RequestParam String resvid,@RequestParam String type){
+        SvcTypeEnum svcType = SvcTypeEnum.valueOf(type);
+        if(type.equals("flight"))
+            userService.chooseFlight(resvid,UserContext.getInstance().getUsername(), new Date());
+        else if (type.equals("hotel"))
+            userService.chooseHotel(resvid,UserContext.getInstance().getUsername(), new Date());
+        else if (type.equals("bus"))
+            userService.chooseBus(resvid,UserContext.getInstance().getUsername(), new Date());
 
-
-        return "reserve";
+        return "redirect:/user/dashboard";
     }
 
 }

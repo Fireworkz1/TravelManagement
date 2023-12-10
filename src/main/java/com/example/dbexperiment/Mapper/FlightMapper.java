@@ -3,12 +3,13 @@ package com.example.dbexperiment.Mapper;
 import com.example.dbexperiment.Entity.Flight;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
 public interface FlightMapper {
-    @Insert("insert into flights(flightNum,price,numSeats,numAvail,fromCity,arivCity)values(#{flightNum},#{price},#{numSeats},#{numAvail},#{fromCity},#{arivCity})")
-    void add(String flightNum, Integer price, Integer numSeats, Integer numAvail, String fromCity, String arivCity);
+    @Insert("insert into flights(flightNum,price,numSeats,numAvail,fromCity,arivCity,time)values(#{flightNum},#{price},#{numSeats},#{numAvail},#{fromCity},#{arivCity},#{time})")
+    void add(String flightNum, Integer price, Integer numSeats, Integer numAvail, String fromCity, String arivCity, Date time);
 
     @Delete("delete from flights where flightNum=#{flightNum}")
     void delete(String flghtNum);

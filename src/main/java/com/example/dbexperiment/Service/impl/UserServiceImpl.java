@@ -4,12 +4,13 @@ import com.example.dbexperiment.Entity.*;
 import com.example.dbexperiment.Mapper.*;
 import com.example.dbexperiment.Service.UserService;
 import com.example.dbexperiment.util.Enum.SvcTypeEnum;
+import com.example.dbexperiment.util.Other.ResvTupleSorter;
+import com.example.dbexperiment.util.Re.DateTimeExtractor;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Resource
@@ -200,7 +201,45 @@ public class UserServiceImpl implements UserService {
         route.setFlightList(flights);
         route.setBusList(buses);
         route.setHotelList(hotels);
+        route.setResvTupleList(routeInfo(username,route));
         return route;
+    }
+
+    @Override
+    public List<ResvTuple> routeInfo(String username, Route route) {
+        List<ResvTuple> resvTupleList = new ArrayList<>();
+
+        System.out.println(route);
+        for(Flight flight :route.getFlightList()){
+            ResvTuple tuple=new ResvTuple();
+            tuple.setName(flight.getFlightNum());
+            tuple.setType("飞机");
+            tuple.setDate(flight.getTime());
+            resvTupleList.add(tuple);
+
+        }
+        for(Bus bus :route.getBusList()){
+            ResvTuple tuple=new ResvTuple();
+            tuple.setName(bus.getLocation());
+            tuple.setType("公交");
+            tuple.setDate(bus.getTime());
+            resvTupleList.add(tuple);
+        }
+        for(Hotel hotel :route.getHotelList()){
+            ResvTuple tuple=new ResvTuple();
+            tuple.setName(hotel.getLocation());
+            tuple.setType("酒店");
+            tuple.setDate(hotel.getTime());
+            resvTupleList.add(tuple);
+
+        }
+
+
+        ResvTupleSorter.bubbleSort(resvTupleList);
+        for(ResvTuple resvTuple:resvTupleList){
+            resvTuple.setDateString(DateTimeExtractor.dealString(resvTuple.getDate()));
+        }
+        return resvTupleList;
     }
 
     @Override

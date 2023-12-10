@@ -11,4 +11,5 @@ public class Reservation {
     private String resvKey;//预定标识号；宾馆，公交车和飞机的名字id
     private Integer resvId;
     private Date resvTime;
+    private Date objTime;
 }
