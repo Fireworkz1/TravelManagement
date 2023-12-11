@@ -20,8 +20,10 @@
         <input class="input-field" type="text" id="username" name="name" required>
 
         <div class="button-container">
+            <button type="button" onclick="changeinfo()">调整用户预约</button>
             <button type="submit">删除该用户</button>
             <button type="button" onclick="pswd()">重置密码</button>
+
         </div>
     </form>
 </div>
@@ -101,6 +103,40 @@
             // 提交表单
             pswd.submit();
             alert('修改默认密码为123456');
+            this.submit();
+        } else {
+            alert('该用户不存在，请重新输入！');
+        }
+
+
+    }
+</script>
+<script>
+    // 注册按钮点击事件
+    function changeinfo() {
+        // 设置一个隐藏字段用于标识是登录还是注册
+        var changeidValue = document.getElementById('username').value.toString();
+        var a = document.getElementById('user_json')
+        var json = a.getAttribute('user_json')
+        /* 将后端的 Flight 列表转换为 JavaScript 对象列表 */
+        var List = JSON.parse(json);
+
+        var isValueInList = List.some(function (item) {
+            return item.custName === changeidValue
+        });
+
+        if (isValueInList) {
+            var registerInput = document.createElement("input");
+            registerInput.setAttribute("type", "hidden");
+            registerInput.setAttribute("name", "action");
+            registerInput.setAttribute("value", "changeresv");
+
+            // 将隐藏字段添加到表单中
+            var info = document.getElementById("delUser");
+            info.appendChild(registerInput);
+
+            // 提交表单
+            info.submit();
             this.submit();
         } else {
             alert('该用户不存在，请重新输入！');

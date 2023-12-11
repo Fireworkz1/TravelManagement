@@ -30,6 +30,25 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.formComponent button {
+    background-color: #335693;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    align-items: center;
+    width: 48%; /* 设置按钮宽度 */
+}
+
+.formComponent button:hover {
+    background-color: #0056b3;
+}
+
+.formComponent button, .formComponent input {
+    transition: background-color 0.3s ease;
+}
 
 .button-container {
     display: flex;

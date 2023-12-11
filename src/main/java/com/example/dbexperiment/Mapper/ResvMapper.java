@@ -16,6 +16,8 @@ public interface ResvMapper {
     List<Reservation> selectByCustomer(String custName);
     @Select("select * from reservations where custName=#{custName} and resvKey=#{resvKey}")
     Reservation selectDetail(String custName,String resvKey);
+    @Select("select resvId from reservations where custName=#{custName} and resvKey=#{resvKey}")
+    Integer selectId(String custName,String resvKey);
     @Delete("delete from reservations where resvId=#{resvId} ")
     void delete(Integer resvId);
     @Delete("delete from reservations where custName=#{custName} ")

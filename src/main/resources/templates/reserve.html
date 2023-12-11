@@ -8,7 +8,13 @@
     <title>Reserve</title>
 </head>
 <body>
+
 <h1 th:text="'您已预约的 ' + ${type} + ' 如下'"></h1>
+<form  id="return" th:action="@{/root/customer}" method="get">
+    <div class="formComponent">
+        <button type="submit">返回</button>
+    </div>
+</form>
 <!-- 数据容器 -->
 <table id="dataTable" class="custom-table">
     <!-- 表头 -->

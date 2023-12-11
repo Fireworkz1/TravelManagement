@@ -212,6 +212,7 @@ public class UserServiceImpl implements UserService {
 
         for(Flight flight :route.getFlightList()){
             ResvTuple tuple=new ResvTuple();
+            tuple.setId(resvMapper.selectId(username,flight.getFlightNum()));
             tuple.setName(flight.getFlightNum());
             tuple.setType("飞机");
             tuple.setDate(flight.getTime());
@@ -220,6 +221,7 @@ public class UserServiceImpl implements UserService {
         }
         for(Bus bus :route.getBusList()){
             ResvTuple tuple=new ResvTuple();
+            tuple.setId(resvMapper.selectId(username,bus.getLocation()));
             tuple.setName(bus.getLocation());
             tuple.setType("公交");
             tuple.setDate(bus.getTime());
@@ -227,6 +229,7 @@ public class UserServiceImpl implements UserService {
         }
         for(Hotel hotel :route.getHotelList()){
             ResvTuple tuple=new ResvTuple();
+            tuple.setId(resvMapper.selectId(username,hotel.getLocation()));
             tuple.setName(hotel.getLocation());
             tuple.setType("酒店");
 

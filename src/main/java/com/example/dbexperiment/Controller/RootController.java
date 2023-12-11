@@ -1,8 +1,10 @@
 package com.example.dbexperiment.Controller;
 
+import com.example.dbexperiment.Config.UserContext;
 import com.example.dbexperiment.Entity.Bus;
 import com.example.dbexperiment.Entity.Flight;
 import com.example.dbexperiment.Entity.Hotel;
+import com.example.dbexperiment.Entity.Route;
 import com.example.dbexperiment.Service.RootService;
 import com.example.dbexperiment.Service.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -104,11 +106,7 @@ public class RootController {
         rootService.deleteBus(name);
         return "redirect:/root/bus";
     }
-    @GetMapping("/reservation")
-    public String getResv(Model model){
 
-        return null;
-    }
     @GetMapping("/customer")
     public String getCustomer(Model model) throws JsonProcessingException {
         List<String> self_label=new ArrayList<>();
@@ -123,10 +121,29 @@ public class RootController {
     public String delCustomer(Model model, @RequestParam String name,@RequestParam(required = false, defaultValue = "") String action){
         if ("default".equals(action)) {
             rootService.defaultPswd(name);
-        }
-        else {
+        } else if ("changeresv".equals(action)) {
+            return "redirect:/root/reservation?user="+name;
+
+        } else {
             rootService.delUser(name);
         };
         return "redirect:/root/customer";
+    }
+    @GetMapping("/reservation")
+    public String getResv(Model model,@RequestParam String user) throws JsonProcessingException {
+        String user_info="以下是"+user+"的行程,请在输入框内输入要删除的预约id";
+        List<String> route_label=new ArrayList<>();
+        route_label.add("预约id");
+        route_label.add("编号/名字");
+        route_label.add("种类");
+        route_label.add("时间");
+        Route route=userService.travelRoute(user);
+        model.addAttribute("user_info", user_info);//title
+        model.addAttribute("tuple_route", route.getResvTupleList());//用户当前全部预定信息
+        model.addAttribute("user_route","您当前的预约如下");//用户当前旅行路线
+        model.addAttribute("route_label", route_label);
+        model.addAttribute("route_info_json", new ObjectMapper().writeValueAsString(route.getResvTupleList()));
+
+        return "/roothtml/reservation";
     }
 }
